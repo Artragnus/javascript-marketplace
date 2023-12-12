@@ -1,5 +1,5 @@
-import app from "./index";
+import express from "express";
 
-import route from "./routes";
+export const app = express();
 
-app.use(route);
+app.listen(process.env.PORT || 3000);

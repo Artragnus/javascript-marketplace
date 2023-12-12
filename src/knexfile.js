@@ -17,6 +17,7 @@ export default {
     },
     migrations: {
       directory: "./database/migrations",
+      loadExtensions: [".js"],
     },
   },
 };
