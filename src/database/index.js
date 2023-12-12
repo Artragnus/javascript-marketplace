@@ -1,8 +1,6 @@
 import "dotenv/config";
 import knex from "knex";
 
-const teste = process.env.DB_HOST;
-
 export const config = {
   client: "pg",
   connection: {
@@ -13,12 +11,9 @@ export const config = {
     database: process.env.DB_NAME,
   },
   migrations: {
-    directory: "./database/migrations",
+    directory: "./src/database/migrations",
     loadExtensions: [".cjs"],
   },
 };
-
-console.log(config);
-console.log(teste);
 
 export const db = knex(config);
