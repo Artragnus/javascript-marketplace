@@ -1,6 +1,6 @@
 import joi from "joi";
 
-export const registrationSchema = joi.object({
+export const userRegistrationSchema = joi.object({
   name: joi
     .string()
     .min(1)
@@ -22,7 +22,7 @@ export const registrationSchema = joi.object({
     "string.empty": "O campo cpf não pode ser vazio.",
     "string.min": "O campo cpf precisar ter no mínimo 11 caracteres.",
   }),
-  senha: joi.string().min(1).required().messages({
+  password: joi.string().min(1).required().messages({
     "any.required": "O campo senha é obrigatório.",
     "string.empty": "O campo senha não pode ser vazio.",
     "string.min": "O campo senha precisar ter no mínimo 1 caractere.",

@@ -1,5 +1,8 @@
-import app from "./server";
+import express from "express";
+import { router } from "./routes.js";
 
-import route from "./routes";
+export const app = express();
 
-app.use(route);
+app.use(express.json());
+
+app.use(router);

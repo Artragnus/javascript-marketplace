@@ -1,5 +1,5 @@
-import express from "express";
+import { app } from "./app.js";
 
-export const app = express();
+import { config } from "./database/index.js";
 
 app.listen(process.env.PORT || 3000);
