@@ -12,7 +12,6 @@ export const config = {
   },
   migrations: {
     directory: "./src/database/migrations",
-    loadExtensions: [".cjs"],
   },
 };
 
