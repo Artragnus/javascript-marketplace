@@ -6,6 +6,8 @@ import { userRegistration } from "./controllers/user/registration.js";
 import { checkIfEmailIsUnique } from "./middlewares/shared/checkIfEmailIsUnique.js";
 import { validateBodyRequest } from "./middlewares/shared/validateBodyRequest.js";
 import { userRegistrationSchema } from "./lib/joi/schema/user/registration.js";
+import { userLogin } from "./controllers/user/login.js";
+import { userValidateLogin } from "./middlewares/user/login.js";
 
 router.post(
   "/cadastro",
@@ -13,3 +15,5 @@ router.post(
   checkIfEmailIsUnique("users"),
   userRegistration
 );
+
+router.post("/login", userValidateLogin, userLogin);

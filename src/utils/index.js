@@ -15,3 +15,7 @@ export const getUserDataByEmail = async (email, table) => {
 
   return next();
 };
+
+export const sendServerErrorResponse = (res) => {
+  return res.status(500).json({ mensagem: "Erro interno do servidor" });
+};
