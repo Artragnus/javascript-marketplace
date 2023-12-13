@@ -19,9 +19,8 @@ export const userRegistration = async (req, res) => {
       })
       .returning(["id", "name", "email"]);
 
-    return res.status(201).json(userData);
+    return res.status(201).json(userData[0]);
   } catch (error) {
     console.log(error);
-    console.log(userId);
   }
 };
