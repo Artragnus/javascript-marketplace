@@ -7,7 +7,7 @@ export const isUserAuthenticated = async (req, res, next) => {
 
   const token = authorization.split(" ")[1];
   try {
-    const { id } = jwt.verify(token, process.env.JWT_PASSWORD);
+    const { id } = jwt.verify(token, process.env.JWT_PASS);
 
     const user = await pool.query(`SELECT * FROM usuarios where id = $1`, [id]);
 
