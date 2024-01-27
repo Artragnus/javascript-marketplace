@@ -5,10 +5,10 @@ export const config = {
   client: "pg",
   connection: {
     host: process.env.DB_HOST,
-    port: process.env.DB_PORT,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
+    port: 5441,
+    user: "postgres",
+    password: "postgres",
+    database: "marketplace",
   },
   migrations: {
     directory: "./src/database/migrations",

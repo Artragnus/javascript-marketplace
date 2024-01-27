@@ -1,3 +1,5 @@
+import { db } from "../../database/index.js";
+
 export const isUserAuthenticated = async (req, res, next) => {
   const { authorization } = req.headers;
 
@@ -9,7 +11,7 @@ export const isUserAuthenticated = async (req, res, next) => {
   try {
     const { id } = jwt.verify(token, process.env.JWT_PASS);
 
-    const user = await pool.query(`SELECT * FROM usuarios where id = $1`, [id]);
+    const user = await db("users").where({ id });
 
     if (user.rowCount < 1) {
       return res.status(401).json({ mensagem: "Não autorizado." });
