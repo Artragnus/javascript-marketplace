@@ -17,10 +17,10 @@ export async function up(knex) {
       table.text("gender").notNullable();
     })
     .then(() => {
-      return knex("gender").insert([
-        { categorie_name: "Masculino" },
-        { categorie_name: "Feminino" },
-        { categorie_name: "Unissex" },
+      return knex("genres").insert([
+        { gender: "Masculino" },
+        { gender: "Feminino" },
+        { gender: "Unissex" },
       ]);
     });
 
@@ -41,7 +41,7 @@ export async function up(knex) {
       table.increments("id").primary();
       table.integer("categorie_id").notNullable().defaultTo(clothes);
       table.text("categorie_name").notNullable();
-      table.text("gender_id").notNullable();
+      table.integer("gender_id").notNullable();
 
       table.foreign("categorie_id").references("id").inTable("categories");
       table.foreign("gender_id").references("id").inTable("genres");
@@ -67,7 +67,7 @@ export async function up(knex) {
       table.increments("id").primary();
       table.integer("categorie_id").notNullable().defaultTo(sneakers);
       table.text("categorie_name").notNullable();
-      table.text("gender_id").notNullable();
+      table.integer("gender_id").notNullable();
 
       table.foreign("categorie_id").references("id").inTable("categories");
       table.foreign("gender_id").references("id").inTable("genres");
