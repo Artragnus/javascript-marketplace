@@ -3,7 +3,27 @@
  * @returns { Promise<void> }
  */
 
+const maleGender = 1;
+const femaleGender = 2;
+const unissex = 3;
+
+const clothes = 1;
+const sneakers = 2;
+
 export async function up(knex) {
+  await knex.schema
+    .createTable("genres", (table) => {
+      table.increments("id").primary();
+      table.text("gender").notNullable();
+    })
+    .then(() => {
+      return knex("gender").insert([
+        { categorie_name: "Masculino" },
+        { categorie_name: "Feminino" },
+        { categorie_name: "Unissex" },
+      ]);
+    });
+
   await knex.schema
     .createTable("categories", (table) => {
       table.increments("id").primary();
@@ -11,119 +31,56 @@ export async function up(knex) {
     })
     .then(() => {
       return knex("categories").insert([
-        { categorie_name: "Masculino" },
-        { categorie_name: "Feminino" },
-      ]);
-    });
-
-  await knex.schema
-    .createTable("subcategories_male", (table) => {
-      table.increments("id").primary();
-      table.integer("categorie_id").notNullable().defaultTo(1);
-      table.text("categorie_name").notNullable();
-
-      table.foreign("categorie_id").references("id").inTable("categories");
-    })
-    .then(() => {
-      return knex("subcategories_male").insert([
         { categorie_name: "Roupas" },
         { categorie_name: "Calçados" },
       ]);
     });
 
   await knex.schema
-    .createTable("subcategories_clothes_male", (table) => {
+    .createTable("clothes_categories", (table) => {
       table.increments("id").primary();
-      table.integer("subcategorie_id").notNullable().defaultTo(1);
+      table.integer("categorie_id").notNullable().defaultTo(clothes);
       table.text("categorie_name").notNullable();
-
-      table
-        .foreign("subcategorie_id")
-        .references("id")
-        .inTable("subcategories_male");
-    })
-    .then(() => {
-      return knex("subcategories_clothes_male").insert([
-        { categorie_name: "Blusas" },
-        { categorie_name: "Camisas" },
-        { categorie_name: "Camisetas" },
-        { categorie_name: "Shorts" },
-        { categorie_name: "Calças" },
-      ]);
-    });
-
-  await knex.schema
-    .createTable("subcategories_sneakers_male", (table) => {
-      table.increments("id").primary();
-      table.integer("subcategorie_id").notNullable().defaultTo(2);
-      table.text("categorie_name");
-
-      table
-        .foreign("subcategorie_id")
-        .references("id")
-        .inTable("subcategories_male");
-    })
-    .then(() => {
-      return knex("subcategories_sneakers_male").insert([
-        { categorie_name: "Tênis" },
-        { categorie_name: "Sapatos" },
-      ]);
-    });
-
-  await knex.schema
-    .createTable("subcategories_female", (table) => {
-      table.increments("id").primary();
-      table.integer("categorie_id").notNullable().defaultTo(2);
-      table.text("categorie_name").notNullable();
+      table.text("gender_id").notNullable();
 
       table.foreign("categorie_id").references("id").inTable("categories");
+      table.foreign("gender_id").references("id").inTable("genres");
     })
     .then(() => {
-      return knex("subcategories_female").insert([
-        { categorie_name: "Roupas" },
-        { categorie_name: "Calçados" },
+      return knex("clothes_categories").insert([
+        { categorie_name: "Blusas", gender_id: maleGender },
+        { categorie_name: "Camisas", gender_id: maleGender },
+        { categorie_name: "Camisetas", gender_id: maleGender },
+        { categorie_name: "Shorts", gender_id: maleGender },
+        { categorie_name: "Calças", gender_id: maleGender },
+        { categorie_name: "Blusas", gender_id: femaleGender },
+        { categorie_name: "Camisas", gender_id: femaleGender },
+        { categorie_name: "Camisetas", gender_id: femaleGender },
+        { categorie_name: "Shorts", gender_id: femaleGender },
+        { categorie_name: "Calças", gender_id: femaleGender },
+        { categorie_name: "Saias", gender_id: femaleGender },
       ]);
     });
 
   await knex.schema
-    .createTable("subcategories_clothes_female", (table) => {
+    .createTable("sneakers_categories", (table) => {
       table.increments("id").primary();
-      table.integer("subcategorie_id").notNullable().defaultTo(1);
-      table.text("categorie_name");
+      table.integer("categorie_id").notNullable().defaultTo(sneakers);
+      table.text("categorie_name").notNullable();
+      table.text("gender_id").notNullable();
 
-      table
-        .foreign("subcategorie_id")
-        .references("id")
-        .inTable("subcategories_female");
+      table.foreign("categorie_id").references("id").inTable("categories");
+      table.foreign("gender_id").references("id").inTable("genres");
     })
     .then(() => {
-      return knex("subcategories_clothes_female").insert([
-        { categorie_name: "Blusas" },
-        { categorie_name: "Camisas" },
-        { categorie_name: "Camisetas" },
-        { categorie_name: "Shorts" },
-        { categorie_name: "Calças" },
-        { categorie_name: "Saias" },
-      ]);
-    });
+      return knex("sneakers_categories").insert([
+        { categorie_name: "Tênis", gender_id: maleGender },
+        { categorie_name: "Sapatos", gender_id: maleGender },
 
-  await knex.schema
-    .createTable("subcategories_sneakers_female", (table) => {
-      table.increments("id").primary();
-      table.integer("subcategorie_id").notNullable().defaultTo(2);
-      table.text("categorie_name");
-
-      table
-        .foreign("subcategorie_id")
-        .references("id")
-        .inTable("subcategories_female");
-    })
-    .then(() => {
-      return knex("subcategories_sneakers_female").insert([
-        { categorie_name: "Tênis" },
-        { categorie_name: "Sandálias" },
-        { categorie_name: "Saltos" },
-        { categorie_name: "Botas" },
+        { categorie_name: "Tênis", gender_id: femaleGender },
+        { categorie_name: "Sandálias", gender_id: femaleGender },
+        { categorie_name: "Saltos", gender_id: femaleGender },
+        { categorie_name: "Botas", gender_id: femaleGender },
       ]);
     });
 }
@@ -132,4 +89,9 @@ export async function up(knex) {
  * @param { import("knex").Knex } knex
  * @returns { Promise<void> }
  */
-export async function down(knex) {}
+export async function down(knex) {
+  await knex.schema.dropTable("genres");
+  await knex.schema.dropTable("categories");
+  await knex.schema.dropTable("clothes_categories");
+  await knex.schema.dropTable("sneakers_categories");
+}
